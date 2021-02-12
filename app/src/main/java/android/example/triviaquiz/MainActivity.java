@@ -108,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
 						"  {\n" +
 						"    \"question\": \"What is the reciprocal of \\\\(\\\\frac{4+y^2}{4-y^2}\\\\)?\",\n" +
 						"    \"correct_answer\": \"\\\\(\\\\frac{4+y^2}{4-y^2}\\\\)\",\n" +
-						"    \"incorrect_answers\": [\"\\\\(\\\\frac{4+x^3}{4-y^2}\\\\)\",\n" +
+						"    \"incorrect_answers\": [\n" +
+						"\"\\\\(\\\\frac{4+x^3}{4-y^2}\\\\)\",\n" +
 						"      \"\\\\(\\\\frac{4+y^2}{4+y^2}\\\\)\",\n" +
 						"      \"\\\\(\\\\frac{4+x^4}{4+y^2}\\\\)\",\n" +
 						"    ]\n" +
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 					JSONObject mathQuestionList = new JSONObject(staticData);
 					JSONArray questionJSONData = mathQuestionList.getJSONArray("questions");
 					for (int i = 0; i < questionJSONData.length(); i++) {
-						questions.add(new Question((JSONObject) questionJSONData.get(i)));
+						questions.add(new Question((JSONObject) questionJSONData.get(i), true));
 					}
 					
 				} catch (JSONException e) {

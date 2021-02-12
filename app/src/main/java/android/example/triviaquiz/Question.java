@@ -12,6 +12,7 @@ public class Question {
 	private String correctOption;
 	private String[] incorrectOptions;
 	private int checked = -1;
+	private boolean latex = false;
 	
 	public Question(JSONObject questionJSON) {
 		try {
@@ -33,10 +34,21 @@ public class Question {
 		
 	}
 	
+	public Question(JSONObject questionJSON, boolean latex) {
+		this(questionJSON);
+		this.latex = latex;
+	}
+	
+	
 	public Question(String question, String correctOption, String[] incorrectOptions) {
 		this.question = question;
 		this.correctOption = correctOption;
 		this.incorrectOptions = incorrectOptions;
+	}
+	
+	public Question(String question, String correctOption, String[] incorrectOptions, boolean latex) {
+		this(question, correctOption, incorrectOptions);
+		this.latex = latex;
 	}
 	
 	public String getQuestion() {
@@ -81,5 +93,9 @@ public class Question {
 			QuizActivity.incrementCounter();
 		}
 		this.checked = checked;
+	}
+	
+	public boolean isLatex() {
+		return latex;
 	}
 }
