@@ -72,7 +72,7 @@ public class Question {
 				'}';
 	}
 	
-	public int getChecked() {
+	public int checkedIndex() {
 		return checked;
 	}
 	

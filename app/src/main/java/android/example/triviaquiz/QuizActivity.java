@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
 		new CountDownTimer(120000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
-				timer.setText(getCountTimer(millisUntilFinished / 1000));
+				timer.setText(formatTimer(millisUntilFinished / 1000));
 				countTimer++;
 			}
 			
@@ -51,7 +51,7 @@ public class QuizActivity extends AppCompatActivity {
 		listView.setAdapter(adapter);
 	}
 	
-	public String getCountTimer(long rem) {
+	public String formatTimer(long rem) {
 		long min = rem / 60;
 		long sec = rem - min * 60;
 		return String.format("%02d:%02d", min, sec);

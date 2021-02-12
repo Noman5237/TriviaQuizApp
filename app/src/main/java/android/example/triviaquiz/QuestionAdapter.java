@@ -47,12 +47,7 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
 		radioButtons[3] = toBeRendered.findViewById(R.id.op4);
 		radioButtons[3].setText(question.getIncorrectOptions()[2]);
 		
-		if (question.getChecked() != -1) {
-			radioButtons[question.getChecked()].setChecked(true);
-		} else {
-			clearChecked(radioButtons);
-		}
-		
+		clearChecked(radioButtons);
 		for (int i = 0; i < 4; i++) {
 			final RadioButton radioButton = radioButtons[i];
 			final int finalI = i;
@@ -60,11 +55,14 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
 				@Override
 				public void onClick(View v) {
 					clearChecked(radioButtons);
-					radioButton.setChecked(true);
 					question.setChecked(finalI);
+					radioButton.setChecked(true);
 				}
 			});
 		}
+		
+		if (question.checkedIndex() != -1)
+			radioButtons[question.checkedIndex()].setChecked(true);
 		
 		return toBeRendered;
 	}
