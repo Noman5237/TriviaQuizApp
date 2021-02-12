@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.List;
-
-import io.github.kexanie.library.MathView;
 
 public class QuestionAdapter extends ArrayAdapter<Question> {
 	
@@ -30,25 +29,49 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
 			toBeRendered = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.question_item_layout, parent, false);
 		}
 		
-		Question question = getItem(position);
+		final Question question = getItem(position);
 		
-		MathView questionText = toBeRendered.findViewById(R.id.question);
+		TextView questionText = toBeRendered.findViewById(R.id.question);
 		questionText.setText(question.getQuestion());
-		MathView o1, o2, o3, o4;
+		final RadioButton[] radioButtons = new RadioButton[4];
 		
+		radioButtons[0] = toBeRendered.findViewById(R.id.op1);
+		radioButtons[0].setText(question.getCorrectOption());
 		
-		o1 = toBeRendered.findViewById(R.id.op1);
-		o1.setText(question.getCorrectOption());
+		radioButtons[1] = toBeRendered.findViewById(R.id.op2);
+		radioButtons[1].setText(question.getIncorrectOptions()[0]);
 		
-		o2 = toBeRendered.findViewById(R.id.op2);
-		o2.setText(question.getIncorrectOptions()[0]);
+		radioButtons[2] = toBeRendered.findViewById(R.id.op3);
+		radioButtons[2].setText(question.getIncorrectOptions()[1]);
 		
-		o3 = toBeRendered.findViewById(R.id.op3);
-		o3.setText(question.getIncorrectOptions()[1]);
+		radioButtons[3] = toBeRendered.findViewById(R.id.op4);
+		radioButtons[3].setText(question.getIncorrectOptions()[2]);
 		
-		o4 = toBeRendered.findViewById(R.id.op4);
-		o4.setText(question.getIncorrectOptions()[2]);
+		if (question.getChecked() != -1) {
+			radioButtons[question.getChecked()].setChecked(true);
+		} else {
+			clearChecked(radioButtons);
+		}
+		
+		for (int i = 0; i < 4; i++) {
+			final RadioButton radioButton = radioButtons[i];
+			final int finalI = i;
+			radioButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					clearChecked(radioButtons);
+					radioButton.setChecked(true);
+					question.setChecked(finalI);
+				}
+			});
+		}
 		
 		return toBeRendered;
+	}
+	
+	public void clearChecked(RadioButton... radioButtons) {
+		for (RadioButton radioButton : radioButtons) {
+			radioButton.setChecked(false);
+		}
 	}
 }

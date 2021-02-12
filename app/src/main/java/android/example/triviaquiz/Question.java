@@ -11,6 +11,7 @@ public class Question {
 	private String question;
 	private String correctOption;
 	private String[] incorrectOptions;
+	private int checked = -1;
 	
 	public Question(JSONObject questionJSON) {
 		try {
@@ -22,7 +23,7 @@ public class Question {
 				incorrectOptions[i] = incorrectOptionsJson.getString(i);
 			}
 			
-			this.question = question;
+			this.question = question.replaceAll("&quot;", "'");
 			this.correctOption = correctOption;
 			this.incorrectOptions = incorrectOptions;
 			
@@ -69,5 +70,16 @@ public class Question {
 				", correctOption='" + correctOption + '\'' +
 				", incorrectOptions=" + Arrays.toString(incorrectOptions) +
 				'}';
+	}
+	
+	public int getChecked() {
+		return checked;
+	}
+	
+	public void setChecked(int checked) {
+		if (this.checked == -1) {
+			QuizActivity.incrementCounter();
+		}
+		this.checked = checked;
 	}
 }
